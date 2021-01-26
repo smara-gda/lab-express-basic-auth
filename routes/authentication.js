@@ -41,9 +41,31 @@ router.get('/log-in', (req, res, next) => {
   res.render('login');
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/log-in', (req, res, next) => {
   const data = req.body;
-  res.redirect('/');
+  let user;
+  User.findOne({
+    username: data.username
+  })
+    .then((doc) => {
+      user = doc;
+      if (user) {
+        return bcryptjs.compare(data.password, user.passwordHash);
+      } else {
+        throw new Error('There is not user perofile with that username');
+      }
+    })
+    .then((result) => {
+      req.session.user = user;
+      if (result) {
+        res.redirect('/profile');
+      } else {
+        throw new Error('The password doesnt match');
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 module.exports = router;

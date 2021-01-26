@@ -5,6 +5,12 @@ const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const serveFavicon = require('serve-favicon');
 
+const expressSession = require('express-session');
+const connectMongo = require('connect-mongo');
+
+const MongoStore = connectMongo(expressSession);
+const mongoose = require('mongoose');
+
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
 
@@ -25,8 +31,23 @@ app.use(
     dest: join(__dirname, 'public'),
     outputStyle:
       process.env.NODE_ENV === 'development' ? 'nested' : 'compressed',
-    force: process.env.NODE_ENV === 'development',
-    sourceMap: true
+    force: process.env.NODE_ENV === 'development'
+    // sourceMap: true
+  })
+);
+
+app.use(
+  expressSession({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 15 * 24 * 60 * 60 * 1000
+    },
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 60 * 60
+    })
   })
 );
 
