@@ -1,5 +1,5 @@
 const express = require('express');
-
+const routeGuard = require('./../middleware/routeGaurd');
 const User = require('./../models/user');
 const router = new express.Router();
 
@@ -52,12 +52,12 @@ router.post('/log-in', (req, res, next) => {
       if (user) {
         return bcryptjs.compare(data.password, user.passwordHash);
       } else {
-        throw new Error('There is not user perofile with that username');
+        throw new Error('There is no user perofile with that username');
       }
     })
     .then((result) => {
-      req.session.user = user;
       if (result) {
+        req.session.user = user;
         res.redirect('/profile');
       } else {
         throw new Error('The password doesnt match');
