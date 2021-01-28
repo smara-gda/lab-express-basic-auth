@@ -52,7 +52,7 @@ router.post('/log-in', (req, res, next) => {
       if (user) {
         return bcryptjs.compare(data.password, user.passwordHash);
       } else {
-        throw new Error('There is no user perofile with that username');
+        throw new Error('There is no user profile with that username');
       }
     })
     .then((result) => {
