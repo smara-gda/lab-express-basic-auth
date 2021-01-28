@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
-const profileRouter = require('./routes/profile');
+const profileRouter = require('./routes/userprofile');
 
 const app = express();
 
@@ -33,8 +33,8 @@ app.use(
     dest: join(__dirname, 'public'),
     outputStyle:
       process.env.NODE_ENV === 'development' ? 'nested' : 'compressed',
-    force: process.env.NODE_ENV === 'development'
-    // sourceMap: true
+    force: process.env.NODE_ENV === 'development',
+    sourceMap: true
   })
 );
 
