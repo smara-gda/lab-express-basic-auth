@@ -52,7 +52,7 @@ app.use(
     })
   })
 );
-app.use(routeGaurd);
+// app.use(routeGaurd);
 app.use(deserializeUser);
 app.use('/', indexRouter);
 app.use('/authentication', authenticationRouter);
