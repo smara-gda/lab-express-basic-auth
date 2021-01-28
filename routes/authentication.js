@@ -30,6 +30,7 @@ router.post('/sign-up', (req, res, next) => {
       });
     })
     .then((user) => {
+      req.session.userId = req._id;
       res.redirect('/profile');
     })
     .catch((error) => {
@@ -56,8 +57,10 @@ router.post('/log-in', (req, res, next) => {
       }
     })
     .then((result) => {
+      console.log(user);
       if (result) {
-        req.session.user = user;
+        req.session.userId = user._id;
+        // console.log(req.session.userId);
         res.redirect('/profile');
       } else {
         throw new Error('The password doesnt match');

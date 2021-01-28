@@ -1,9 +1,9 @@
-const routeGuard = (req, res, next) => {
-  if (req.session.user) {
+const routeGaurd = (req, res, next) => {
+  if (req.session.userId) {
     next();
   } else {
     res.redirect('/authentication/log-in');
   }
 };
 
-module.exports = routeGuard;
+module.exports = routeGaurd;

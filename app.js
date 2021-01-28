@@ -7,12 +7,14 @@ const serveFavicon = require('serve-favicon');
 
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
-
+const routeGaurd = require('./middleware/routeGaurd');
+const deserializeUser = require('./middleware/deserializeUser');
 const MongoStore = connectMongo(expressSession);
 const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const authenticationRouter = require('./routes/authentication');
+const profileRouter = require('./routes/profile');
 
 const app = express();
 
@@ -50,9 +52,11 @@ app.use(
     })
   })
 );
-
+app.use(routeGaurd);
+app.use(deserializeUser);
 app.use('/', indexRouter);
 app.use('/authentication', authenticationRouter);
+app.use('/', routeGaurd, profileRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
