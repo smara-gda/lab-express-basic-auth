@@ -10,6 +10,8 @@ const deserializeUser = (req, res, next) => {
       .catch((error) => {
         next(error);
       });
+  } else {
+    next();
   }
 };
 module.exports = deserializeUser;
