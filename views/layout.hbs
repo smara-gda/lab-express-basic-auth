@@ -7,11 +7,16 @@
   <body>
     <nav>
       <a href="/">Home</a>
+      {{#if user}}
       <a href="/profile">Profile</a>
+       <a href="/log-out">Log out</a>
+       {{else}}
       <a href="/authentication/sign-up">Sign Up</a>
       <a href="/authentication/log-in">Log in</a>
+      {{/if}}
       <a href="/main">Main</a>
       <a href="/private">Private</a>
+     
     </nav>
     {{{body}}}
     

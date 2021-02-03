@@ -3,7 +3,7 @@
 <form action="" method="POST">
     {{!-- something to edit the user profile --}}
     <label for="name">Your full name</label>
-    <input type="text" name="fullname" id="name">
+    <input type="text" name="name" id="name" value={{user.name}}>
     <label for="username">Your username</label>
     <input type="text" name="username" id="username" value="{{user.username}}">
     <button>Update information</button>
